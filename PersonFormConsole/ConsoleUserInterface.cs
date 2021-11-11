@@ -123,7 +123,7 @@ namespace PersonFormConsole
         {
             var plugins = GetPlugins();
             int serializerIndex = AskForSerializer();
-            plugins[serializerIndex - 1].Serialize(user); // TU COŚ NIE DZIAŁA I NIE WIEM CZEMU!!!
+            plugins[serializerIndex - 1].Serialize(user);
         }
         private static int AskForSerializer()
         {

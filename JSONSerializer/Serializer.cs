@@ -1,5 +1,4 @@
 ﻿using CustomSerializer;
-using Newtonsoft.Json;
 using PersonFormConsole;
 using System;
 using System.IO;
@@ -20,16 +19,15 @@ namespace JSONSerializer
             var myFile = directory.GetFiles()
                          .OrderByDescending(f => f.LastWriteTime)
                          .First();
-            using (StreamReader r = new StreamReader(myFile.FullName))
-            {
-                string json = r.ReadToEnd();
-                return JsonConvert.DeserializeObject<Person>(json);
-            }
+            string jsonString = File.ReadAllText(myFile.FullName);
+            return JsonSerializer.Deserialize<Person>(jsonString);
         }
 
         public void Serialize(Person person)
         {
-            File.WriteAllText(@$"C:\Users\filip.zabnicki\source\repos\.NET_PersonalForm\Forms\form{DateTime.Today}.json", JsonConvert.SerializeObject(person));
+            string fileName = @$"C:\Users\filip.zabnicki\source\repos\.NET_PersonalForm\Forms\form{DateTime.Now.ToString("yyyyMMddTHH_mm_ssZ")}.json";
+            string jsonString = JsonSerializer.Serialize(person);
+            File.WriteAllText(fileName, jsonString);
         }
     }
 }
